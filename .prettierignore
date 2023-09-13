@@ -1,0 +1,7 @@
+# .prettierignore
+**/.vscode
+**/.yarn
+**/.husky
+
+dist
+
