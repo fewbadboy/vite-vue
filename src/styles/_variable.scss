@@ -1,0 +1,40 @@
+@use 'sass:math';
+@use 'sass:list';
+@use 'sass:map';
+
+$font-weights: ("regular": 400, "medium": 500, "bold": 700);
+$_private: 10px; // private
+$_color: null;
+$radius: 4px;
+
+@function color-custom($color) {
+  @return $_color or $color
+}
+
+@mixin floatCustom($property, $value) {
+  #{$property}: $value
+}
+
+@mixin rounded($radius) {
+  @if $radius != 0 {
+    border-radius: $radius;
+  }
+}
+
+@mixin order($height, $selectors...) {
+  @for $i from 0 to length($selectors) {
+    #{nth(selectors, $i+1)} {
+      position: absolute;
+      height: $height;
+      margin-top: $i * $height;
+    }
+  }
+}
+
+@supports (position: sticky) {
+  .banner {
+    position: sticky;
+    border-width: list.nth(1px 2px 3px, 2);
+    font-weight: map.get($font-weights, "medium");
+  }
+}

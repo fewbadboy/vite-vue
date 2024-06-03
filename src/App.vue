@@ -1,20 +1,43 @@
 <script setup>
-import HelloWorld from "@/components/HelloWorld.vue";
+import { computed, onMounted, ref } from "vue";
+import { StyleProvider, ConfigProvider } from "ant-design-vue";
+import Layout from "@/layout/index.vue";
+
+import zhCN from "ant-design-vue/es/locale/zh_CN";
+
+import dayjs from "dayjs";
+import "dayjs/locale/zh-cn";
+dayjs.locale("zh-cn");
+
+const theme = ref({
+  components: {
+    Radio: {
+      colorPrimary: "#00b96b",
+    },
+  },
+});
+
+const locale = computed(() => {
+  return zhCN;
+});
+
+onMounted(() => {
+  document.documentElement.classList.add("dark");
+});
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <h1 class="bottom-1 text-3xl font-bold underline opacity-50 hover:opacity-80">
-    Hello world!
-  </h1>
-  <HelloWorld msg="Vite + Vue" />
+  <ConfigProvider :theme="theme" :locale="locale">
+    <StyleProvider hash-priority="high">
+      <router-view v-slot="{ Component, route }">
+        <transition :name="route.meta.transition || 'fade'">
+          <keep-alive>
+            <component :is="Component" :key="route.path" />
+          </keep-alive>
+        </transition>
+      </router-view>
+    </StyleProvider>
+  </ConfigProvider>
 </template>
 
 <style scoped>

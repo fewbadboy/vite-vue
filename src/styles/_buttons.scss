@@ -1,0 +1,8 @@
+@use 'variable' as v;
+
+.btn-custom {
+  @include v.rounded(0);
+  color: aqua;
+  border: 1px solid red;
+  border-top-left-radius: 10px;
+}

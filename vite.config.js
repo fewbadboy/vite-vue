@@ -1,50 +1,48 @@
-import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+import { defineConfig } from "vite";
+
+import Components from "unplugin-vue-components/vite";
+import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
+
 import tailwindcss from "tailwindcss";
 import autoprefixer from "autoprefixer";
-import path from "node:path";
+import { resolve } from "node:path";
+import { base } from "./src/settings";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/vite/",
+  base,
   resolve: {
-    alias: [{ find: "@", replacement: path.resolve(__dirname, "src") }],
+    alias: [{ find: "@", replacement: resolve(__dirname, "src") }],
   },
   css: {
-    postcss: {
-      plugins: [tailwindcss, autoprefixer],
-    },
     modules: {
-      localsConvention: "camelCase",
+      localsConvention: "camelCaseOnly",
     },
   },
   assetsInclude: ["**/*.glb"],
-  plugins: [vue()],
+  plugins: [
+    vue(),
+    Components({
+      resolvers: [
+        AntDesignVueResolver({
+          importStyle: false, // css in js
+        }),
+      ],
+    }),
+  ],
   server: {
+    // host: '0.0.0.0',
     proxy: {
-      "/api": {
-        target: "",
+      "/review": {
+        target: "http://172.21.9.194:7861",
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
+        rewrite: (path) => path.replace(/^\/review/, "/review"),
       },
       "/socket.io": {
-        target: "ws://localhost:8000",
+        target: "ws://172.21.9.194:7861/review/ws",
         ws: true,
       },
-    },
-  },
-  optimizeDeps: {
-    esbuildOptions: {},
-  },
-  build: {
-    rollupOptions: {
-      // https://rollupjs.org/configuration-options/
-    },
-    commonjsOptions: {
-      // convert CommonJS modules to ES6
-    },
-    dynamicImportVarsOptions: {
-      // support variables in dynamic imports
     },
   },
 });
