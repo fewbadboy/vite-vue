@@ -4,8 +4,6 @@ import { defineConfig } from "vite";
 import Components from "unplugin-vue-components/vite";
 import { AntDesignVueResolver } from "unplugin-vue-components/resolvers";
 
-import tailwindcss from "tailwindcss";
-import autoprefixer from "autoprefixer";
 import { resolve } from "node:path";
 import { base } from "./src/settings";
 
@@ -32,7 +30,7 @@ export default defineConfig({
     }),
   ],
   server: {
-    // host: '0.0.0.0',
+    host: "0.0.0.0",
     proxy: {
       "/review": {
         target: "http://172.21.9.194:7861",
