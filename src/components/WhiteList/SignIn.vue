@@ -7,13 +7,12 @@
 
 <script setup>
 import { useRouter } from "vue-router";
-import { useAuthStore } from "@/stores/auth";
+import { setToken } from "@/utils/auth";
 
 const router = useRouter();
-const auth = useAuthStore();
 
 function handleSignIn() {
-  auth.authorization = "Bear 123456";
+  setToken("Bear 123456");
   router.push("/");
 }
 

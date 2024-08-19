@@ -1,26 +1,28 @@
 import router from "./router";
 import { storeToRefs } from "pinia";
-import { useAuthStore } from "@/stores/auth";
+
 import { useUserStore } from "@/stores/user";
 import { usePermissionStore } from "@/stores/permission";
+import { getToken } from "./utils/auth";
 
 const whileList = ["/sign-in", "/sign-up"];
 
 async function canAccessPage(to) {
-  const auth = useAuthStore();
   const user = useUserStore();
   const permission = usePermissionStore();
-  const { authorization, isAuthenticated } = storeToRefs(auth);
   const { menus } = storeToRefs(user);
   const { getUserInfo } = user;
   const { generateRoutes } = permission;
 
   return new Promise(async (resolve, reject) => {
-    if (isAuthenticated.value) {
+    const token = getToken();
+    if (token) {
       if (to.path === "/sign-in") {
         resolve({ path: "/" });
       } else {
+        console.log(menus);
         const hasMenus = menus.length > 0;
+        console.log(to, hasMenus);
         if (hasMenus) {
           resolve(true);
         } else {
@@ -50,16 +52,6 @@ async function canAccessPage(to) {
         resolve(true);
       }
     }
-
-    // if (!whileList.includes(to.path) && !isAuthenticated.value) {
-    //   resolve({ name: 'sign-in' })
-    // } else {
-    //   if (whileList.includes(to.path) && isAuthenticated.value) {
-    //     resolve({ path: '/' })
-    //   } else {
-    //     resolve(true)
-    //   }
-    // }
   });
 }
 

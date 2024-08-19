@@ -72,7 +72,7 @@ export const usePermissionStore = defineStore("permission", {
         const resultAsyncMenu = filterAsyncMenus(asyncRoutes, showMenuKeys);
         const resultConstantMenu = filterConstantMenu(constantRoutes);
         this.menus = [...resultConstantMenu, ...resultAsyncMenu];
-
+        console.log(this.menus);
         resolve(resultAsyncRoutes);
       });
     },

@@ -5,5 +5,5 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 ## Install
 
 ```shell
-npm i --registry=https://registry.npm.taobao.org
+npm i --registry=https://mirrors.cloud.tencent.com/npm/
 ```
