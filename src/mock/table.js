@@ -25,5 +25,6 @@ export function mockUsers() {
       color: fakerZH_CN.color.rgb(),
     });
   }
+
   return users;
 }

@@ -30,7 +30,7 @@ export default defineConfig({
     }),
   ],
   server: {
-    host: "0.0.0.0",
+    // host: "0.0.0.0",
     proxy: {
       "/review": {
         target: "http://172.21.9.194:7861",

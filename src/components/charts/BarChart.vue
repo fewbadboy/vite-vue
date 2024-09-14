@@ -29,7 +29,8 @@ const barChart = shallowRef(null);
 
 function initChart() {
   barChart.value = echarts.init(barChartRef.value, null, {
-    height: props.height,
+    // bug: https://github.com/apache/echarts/issues/20323
+    // height: props.height,
   });
 }
 

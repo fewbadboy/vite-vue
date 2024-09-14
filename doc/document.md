@@ -46,7 +46,7 @@
 </script>
 
 <template>
-   <Icon type={MessageSvg}
+   <Icon type={MessageSvg} />
 </template>
 ```
 

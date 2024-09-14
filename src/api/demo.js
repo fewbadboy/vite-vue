@@ -50,10 +50,7 @@ export function getMockInfo(params) {
     adapter: (config) => {
       return new Promise((resolve, reject) => {
         resolve({
-          data: {
-            data: { name: "test-mock" },
-            code: 200,
-          },
+          data: { name: "test-mock" },
           status: 200,
           statusText: "OK",
         });
